@@ -1,20 +1,20 @@
 var Admin = require('./support/admin');
 
-var varnish = new Admin('127.0.0.1', 7779, { 
-  file: '/nw/sec.ret' 
+var varnish = new Admin('127.0.0.1', 7779, {
+  file: '/nw/sec.ret'
 , 'auto connect': false });
 
 
 describe('Varnish Admin', function(){
-  
+
   it('should exist', function(){
     Admin.should.be.a('function')
   });
-  
+
   it('should be instanceof', function(){
     varnish.should.be.instanceof(Admin);
   });
-  
+
   it('should connect', function(done){
     // varnish.on('connect', function(){
     //   done();
@@ -25,37 +25,37 @@ describe('Varnish Admin', function(){
     varnish.authenticated = true;
     done();
   });
-  
+
   it('should parse ping', function(done){
     varnish.ping(function(err, resp, raw){
       resp.should.be.true;
       done();
     });
   });
-  
+
   it('should parse start', function(done){
     varnish.start(function(err, resp, raw){
       resp.should.be.true;
       done();
     });
   });
-  
+
   it('should parse stop', function(done){
     varnish.stop(function(err, resp, raw){
       resp.should.be.true;
       done();
     });
   });
-  
-  
+
+
   it('should parse status', function(done){
     varnish.status(function(err, resp, raw){
       resp.should.be.true;
       done();
     });
   });
-  
-  
+
+
   it('should parse vcl.list', function(done){
     varnish.list(function(err, resp, raw){
       resp.should.be.an.instanceof(Array);
@@ -64,8 +64,8 @@ describe('Varnish Admin', function(){
       done();
     });
   });
-  
-  
+
+
   it('should parse storage.list', function(done){
     varnish.storage(function(err, resp, raw){
       resp.should.be.a('object');
@@ -74,7 +74,7 @@ describe('Varnish Admin', function(){
       done();
     });
   });
-  
+
   it('should parse backend.list', function(done){
     varnish.backend(function(err, resp, raw){
       resp.should.be.an.instanceof(Array);
@@ -86,6 +86,6 @@ describe('Varnish Admin', function(){
       done();
     });
   });
-  
-  
+
+
 });

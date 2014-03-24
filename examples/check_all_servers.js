@@ -3,27 +3,40 @@ var varnish = require('../')
 
 varnish.discover(function(err, servers){
   if(err) return console.log('discovery failed');
-  
+
+  // console.log( 'servers', servers );
+
   async.map(servers, health, function(err, results){
+
     if(err) console.log('something is wrong');
-    else console.log('everything looks good');
-    console.log(results);
+
+    if( !err && ( !results ) ) {
+      console.log('no error, but no results');
+    }
+
+    if( !err && results ) {
+      console.log( 'all good, results:', results);
+    }
+
   });
-  
+
   function health(server, cb){
     var admin = server.admin();
-    admin.backend(function(err, resp){
+
+    //console.log( 'server', server );
+    admin.backend(function(err, backends){
+
       admin.destroy();
       if(err) return cb(err);
-      
-      var isHealthy = resp.every(function(backend){
+
+      var isHealthy = backends.every(function(backend){
         return (!!~backend.status.indexOf('Healthy'));
       });
-      
+
       if(isHealthy) return cb(null);
-      
-      return cb(new Error('Not Healthy'), resp);
+
+      return cb(new Error('Not Healthy'), backends);
     });
   }
-    
+
 });

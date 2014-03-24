@@ -1,13 +1,16 @@
 {
   "name": "varnish",
   "description": "high level tools for varnish",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Nathan White <nw@nwhite.net>",
   "dependencies": {
+    "async": "~0.2.10",
+    "debug": "~0.7.4"
   },
   "devDependencies": {
-    "should": "*",
-    "mocha": "*"
+    "should": "~3.2.0-beta1",
+    "mocha": "~1.18.2",
+    "express": "~3.5.0"
   },
   "keywords": [
     "varnish",
