@@ -100,7 +100,6 @@ function startVarnish() {
   var server = varnish.create({
     listen: ':9000',
     ttl: 900,
-    pidfile: require( 'path' ).join( __dirname, '_temp/varnish.pid' ),
     management: 'localhost:4242',
     workers: '2,500,300',
     id: 'test-varnish',
@@ -120,6 +119,11 @@ function startVarnish() {
     }
 
     console.log( 'Varnish Server started using %d.', server.pid );
+
+    process.on( 'exit', function( code ) {
+      console.log( 'Killing varnish...' );
+      process.kill( server.pid );
+    });
 
     // startBackend( 3010, addBackend );
     // startBackend( 3020, addBackend );

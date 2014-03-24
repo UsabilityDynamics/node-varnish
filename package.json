@@ -1,7 +1,7 @@
 {
   "name": "varnish",
   "description": "high level tools for varnish",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Nathan White <nw@nwhite.net>",
   "dependencies": {
     "async": "~0.2.10",
