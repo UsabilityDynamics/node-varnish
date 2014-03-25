@@ -4,16 +4,17 @@
  * DEBUG=varnish node examples/start
  *
  * supervisor --no-restart-on exit --watch lib,examples --quiet --harmony -- examples/start
+ * DEBUG=varnish node examples/start
  */
 
 var varnish = require( '../' );
-var express = require( 'express' );
+//var express = require( 'express' );
 
 varnish.discover( function discoverVarnish( err, servers ) {
 
-  console.log( 'Found %d server(s).', servers.length );
+  console.log( 'Found %d server(s).', servers && servers.length ? servers.length : 0 );
 
-  if( servers.length ) {
+  if( servers && servers.length ) {
 
     servers.forEach( function( server ) {
       console.log( 'Killing [pid=%d]', server.pid );
@@ -22,9 +23,7 @@ varnish.discover( function discoverVarnish( err, servers ) {
 
   }
 
-  startBackend( 3000, function() {
-   //
-  });
+  // startBackend( 3000 );
 
   startVarnish();
 
@@ -123,6 +122,7 @@ function startVarnish() {
     process.on( 'exit', function( code ) {
       console.log( 'Killing varnish...' );
       process.kill( server.pid );
+      process.exit();
     });
 
     // startBackend( 3010, addBackend );
